@@ -37,11 +37,31 @@ Follow-up: Can you come up with an algorithm that is less than O(n2) time comple
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    for(let i=0; i<nums.length-1; i++) {
-        for(let j=i+1; j<nums.length; j++) {
-            if((nums[i] + nums[j]) == target) {
-                return [i,j];
-            }
-        }
+  for (let i = 0; i < nums.length - 1; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] == target) {
+        return [i, j];
+      }
     }
+  }
+
+  // Better O(n) solution
+  // Create a hash table to store numbers and their indices
+  const numToIndex = {};
+
+  // Iterate through the array
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+
+    // Check if the complement exists in the hash table
+    if (numToIndex.hasOwnProperty(complement)) {
+      return [numToIndex[complement], i];
+    }
+
+    // Store the number and its index in the hash table
+    numToIndex[nums[i]] = i;
+  }
+
+  // If no solution is found, return an empty array (though problem guarantees a solution)
+  return [];
 };
