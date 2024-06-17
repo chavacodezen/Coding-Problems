@@ -47,19 +47,19 @@ var twoSum = function(nums, target) {
 
   // Better O(n) solution
   // Create a hash table to store numbers and their indices
-  const numToIndex = {};
+  const numToIndex = new Map();
 
   // Iterate through the array
   for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i];
+      const complement = target - nums[i];
 
-    // Check if the complement exists in the hash table
-    if (numToIndex.hasOwnProperty(complement)) {
-      return [numToIndex[complement], i];
-    }
+      // Check if the complement exists in the hash table
+      if (numToIndex.has(complement)) {
+          return [numToIndex.get(complement), i];
+      }
 
-    // Store the number and its index in the hash table
-    numToIndex[nums[i]] = i;
+      // Store the number and its index in the hash table
+      numToIndex.set(nums[i], i);
   }
 
   // If no solution is found, return an empty array (though problem guarantees a solution)
