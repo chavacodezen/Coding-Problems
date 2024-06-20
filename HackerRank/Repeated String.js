@@ -99,6 +99,26 @@ function repeatedString(s, n) {
     }
 
     return maxCount;
+    
+    /* BETTER SOLUTION - LESS CONSUMPTION */
+	// Step 1: Count the number of 'a' in the original string s
+    const countAInS = (s.match(/a/g) || []).length;
+
+    // Step 2: Calculate the number of full repetitions of s in n characters
+    const fullRepetitions = Math.floor(n / s.length);
+
+    // Step 3: Calculate the number of 'a' in the full repetitions
+    const countAInFullRepetitions = fullRepetitions * countAInS;
+
+    // Step 4: Calculate the number of 'a' in the remaining characters
+    const remainingCharacters = n % s.length;
+    const remainingString = s.slice(0, remainingCharacters);
+    const countAInRemaining = (remainingString.match(/a/g) || []).length;
+
+    // Step 5: Sum up the total number of 'a'
+    const totalCountA = countAInFullRepetitions + countAInRemaining;
+
+    return totalCountA;
 }
 
 function main() {
