@@ -104,19 +104,20 @@ function repeatedString(s, n) {
 	// Step 1: Count the number of 'a' in the original string s
     const countAInS = (s.match(/a/g) || []).length;
 
-    // Step 2: Calculate the number of full repetitions of s in n characters
-    const fullRepetitions = Math.floor(n / s.length);
+    // Step 2: Calculate full occurrences of s in n characters
+    const fullOccurrences = Math.floor(n / s.length);
 
-    // Step 3: Calculate the number of 'a' in the full repetitions
-    const countAInFullRepetitions = fullRepetitions * countAInS;
+    // Step 3: Calculate remainder characters after full occurrences
+    const remainderCharacters = n % s.length;
 
-    // Step 4: Calculate the number of 'a' in the remaining characters
-    const remainingCharacters = n % s.length;
-    const remainingString = s.slice(0, remainingCharacters);
-    const countAInRemaining = (remainingString.match(/a/g) || []).length;
+    // Step 4: Count 'a' in the full occurrences and the remainder
+    let totalCountA = countAInS * fullOccurrences;
 
-    // Step 5: Sum up the total number of 'a'
-    const totalCountA = countAInFullRepetitions + countAInRemaining;
+    for (let i = 0; i < remainderCharacters; i++) {
+        if (s.charAt(i) === 'a') {
+            totalCountA++;
+        }
+    }
 
     return totalCountA;
 }
