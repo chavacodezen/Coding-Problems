@@ -56,3 +56,34 @@ var canPlaceFlowers = function(flowerbed, n) {
 };
 
 // Updated solution
+var canPlaceFlowers = function(flowerbed, n) {
+    // First solve if array have only 1 value
+    if(flowerbed.length==1) {
+        if(flowerbed[0]==0 && n==1) return true
+        if(flowerbed[0]==1 && n==0) return true
+    }
+
+    // Put a plant on the first index if available
+    if(flowerbed[0]==0 && flowerbed[1]==0) {
+        flowerbed[0]=1
+        n--
+    }
+
+    // Put a plant on the last index if available
+    if(flowerbed[flowerbed.length-1]==0 && flowerbed[flowerbed.length-2]==0) {
+        flowerbed[flowerbed.length-1]=1
+        n--
+    }
+
+    // Go through the array and check for spaces
+    for(let i=1; i<flowerbed.length-1; i++) {
+        if(flowerbed[i-1]==0 && flowerbed[i]==0 && flowerbed[i+1]==0) {
+            flowerbed[i]=1
+            n--
+        }
+    }
+
+    // If everything went good n value should go to 0
+    // Meaning we have planted all the required
+    return (n<=0) ? true : false
+};
