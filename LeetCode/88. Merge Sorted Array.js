@@ -61,3 +61,29 @@ var merge = function(nums1, m, nums2, n) {
         p--
     }
 };
+
+// I did it again, other solution
+var merge = function(nums1, m, nums2, n) {
+    let indexm = m-1
+    let indexn = n-1
+    let index = m+n-1
+
+    while(indexm >= 0 && indexn >= 0) {
+        if(nums1[indexm] > nums2[indexn]) {
+            nums1[index] = nums1[indexm]
+            indexm--
+        } else {
+            nums1[index] = nums2[indexn]
+            indexn--
+        }
+        index--
+    }
+
+    while(indexn >= 0) {
+        nums1[index] = nums2[indexn]
+        indexn--
+        index--
+    }
+
+    return nums1
+};
