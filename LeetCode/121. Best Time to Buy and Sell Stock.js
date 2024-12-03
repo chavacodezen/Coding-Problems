@@ -27,8 +27,6 @@ Constraints:
 */
 // Solution O(n^2)
 var maxProfit = function(prices) {
-    let minDay = 0
-    let minPrice = 0
     let profit = 0
 
     for(let i=0; i<prices.length-1; i++) {
