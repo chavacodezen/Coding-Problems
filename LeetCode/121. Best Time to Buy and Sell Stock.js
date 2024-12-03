@@ -39,3 +39,17 @@ var maxProfit = function(prices) {
 };
 
 // Optimized solution O(n)
+var maxProfit = function(prices) {
+    let profit = 0
+    let min = Infinity
+
+    for(let i=0; i<prices.length; i++) {
+        if(prices[i] < min) min = prices[i]
+
+        let currentProfit = prices[i] - min
+
+        if(currentProfit>profit) profit = currentProfit
+    }
+
+    return profit
+};
