@@ -25,6 +25,39 @@ Follow up: Could you solve it without converting the integer to a string?
 */
 public class Solution {
     public bool IsPalindrome(int x) {
+        // First version
+        /*
+        string xs = x.ToString();
+        string reverse = string.Empty;
+
+        for (int i=xs.Length-1; i>=0; i--) {
+            reverse += xs[i];
+        }
+
+        if (reverse == xs) {
+            return true;
+        } else {
+            return false;
+        }
+        */
+        // Improved version
+        if(x<0)
+            return false;
+
+        int original = x;
+        int reverse = 0;
+        int last = 0;
         
+        while (x > 0) {
+            last = x % 10;
+            reverse = (reverse*10) + last;
+            x /= 10;
+        }
+
+        if (reverse == original) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
