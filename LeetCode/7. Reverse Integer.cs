@@ -21,6 +21,24 @@ Constraints:
 */
 public class Solution {
     public int Reverse(int x) {
-        
+        int reverse = 0;
+        int last = 0;
+
+        while (x != 0) {
+            last = x % 10;
+
+            // Detect the Overflow
+            if (reverse > int.MaxValue / 10 ||
+                (reverse == int.MaxValue / 10 && last > int.MaxValue % 10) ||
+                reverse < int.MinValue / 10 ||
+                (reverse == int.MinValue / 10 && last < int.MinValue % 10)) {
+                return 0;
+            }
+
+            reverse = (reverse*10) + last;
+            x /= 10;
+        }
+
+        return reverse;
     }
 }
