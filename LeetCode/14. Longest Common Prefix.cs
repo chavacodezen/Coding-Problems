@@ -20,6 +20,22 @@ strs[i] consists of only lowercase English letters if it is non-empty.
 */
 public class Solution {
     public string LongestCommonPrefix(string[] strs) {
-        
+        string shortest = strs[0];
+
+        for (int i = 1; i < strs.Length; i++) {
+            if (strs[i].Length < shortest.Length) {
+                shortest = strs[i];
+            }
+        }
+
+        for(int i=0; i<shortest.Length; i++) {
+            for(int j=0; j<strs.Length; j++) {
+                if(strs[j][i] != shortest[i]) {
+                    return shortest.Substring(0, i);
+                }
+            }
+        }
+
+        return shortest;
     }
 }
