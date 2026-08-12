@@ -33,14 +33,27 @@ s consists of English letters (lower-case and upper-case), ',' and '.'.
 */
 public class Solution {
     public string Convert(string s, int numRows) {
-        if(numRows == 1 || numRows >= s.Length) return s;
+        if(numRows == 1 || numRows >= s.Length)
+            return s;
 
-        int cycle = 2 * (numRows - 1);
-        char[] result = new char[s.Length];
-        int idx = 0;
+        var rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++)
+            rows[i] = new StringBuilder();
 
-        for(int row=0; row<numRows; row++) {
+        int currRow = 0;
+        bool goingDown = false;
 
+        foreach (char c in s) {
+            rows[currRow].Append(c);
+            if (currRow == 0 || currRow == numRows - 1)
+                goingDown = !goingDown;
+            currRow += goingDown ? 1 : -1;
         }
+
+        var result = new StringBuilder();
+        foreach (var row in rows)
+            result.Append(row);
+
+        return result.ToString();
     }
 }
