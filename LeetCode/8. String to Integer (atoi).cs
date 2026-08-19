@@ -63,6 +63,36 @@ s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+
 */
 public class Solution {
     public int MyAtoi(string s) {
-        
+        int number = 0;
+        bool isNegative = false;
+        s = s.Trim();
+
+        if (s.Length == 0)
+            return 0;
+
+        int start = 0;
+        if (s[0] == '-') {
+            isNegative = true;
+            start = 1;
+        } else if (s[0] == '+') {
+            start = 1;
+        }
+
+        int limit = isNegative ? int.MinValue : -int.MaxValue;
+        int limitDiv10 = limit / 10;
+
+        for (int i = start; i < s.Length; i++) {
+            if (!char.IsDigit(s[i])) break;
+
+            int digit = s[i] - '0';
+
+            if (number < limitDiv10 || (number == limitDiv10 && -digit < limit % 10)) {
+                return isNegative ? int.MinValue : int.MaxValue;
+            }
+
+            number = number * 10 - digit;
+        }
+
+        return isNegative ? number : -number;
     }
 }
