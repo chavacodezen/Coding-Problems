@@ -93,47 +93,29 @@ Example: If you know the password length is 2, then "ab", "cJ", "Lx", are valid 
 but "Aa", "vB", are not.
 For reference A-Z in ASCII decimal values are 65-90, and a-z are 97-122.
 */
-static List<string> LetterHacker(int length) {
+static List<string> LetterHacker(int length)
+{
     var results = new List<string>();
-    var letterIndex = new int[length];   // 0-25, position in alphabet
-    var isUpper = new bool[length];      // case flag per position
-    int pos = 0;
-    letterIndex[0] = -1;
+    char[] current = new char[length];
 
-    while (pos >= 0) {
-        if (pos == length) {
-            var sb = new StringBuilder();
-            for (int i = 0; i < length; i++)
-                sb.Append((char)((isUpper[i] ? 'A' : 'a') + letterIndex[i]));
-            results.Add(sb.ToString());
-            pos--;
-            continue;
+    void Backtrack(int pos, int previousIndex)
+    {
+        if (pos == length)
+        {
+            results.Add(new string(current));
+            return;
         }
 
-        int minAllowed = pos == 0 ? 0 : letterIndex[pos - 1] + 1;
-        if (letterIndex[pos] < minAllowed) letterIndex[pos] = minAllowed;
+        for (int letter = previousIndex + 1; letter < 26; letter++)
+        {
+            current[pos] = (char)('a' + letter);
+            Backtrack(pos + 1, letter);
 
-        if (!isUpper[pos] && letterIndex[pos] <= 25) {
-            isUpper[pos] = true; // try lowercase first, then uppercase before advancing
-            pos++;
-            if (pos < length) letterIndex[pos] = -1;
-            continue;
+            current[pos] = (char)('A' + letter);
+            Backtrack(pos + 1, letter);
         }
-
-        if (isUpper[pos] && letterIndex[pos] <= 25) {
-            letterIndex[pos]++;
-            isUpper[pos] = false;
-            if (25 - letterIndex[pos] + 1 < length - pos) {
-                pos--;
-                continue;
-            }
-            pos++;
-            if (pos < length) letterIndex[pos] = -1;
-            continue;
-        }
-
-        pos--;
     }
 
+    Backtrack(0, -1);
     return results;
 }
